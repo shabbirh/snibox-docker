@@ -7,12 +7,14 @@ services:
       - "8000:80"
     volumes:
       - static-files:/var/www/html
+    restart: always
     depends_on:
       - backend
 
   backend:
     image: snibox/snibox:latest
     command: sh -c "rm -rf tmp/pids && ./bin/rails s -p 3000 -b '0.0.0.0'"
+    restart: always
     environment:
       DB_NAME: "${DB_NAME}"
       DB_USER: "${DB_USER}"
@@ -37,6 +39,7 @@ services:
     image: postgres:10.7-alpine
     volumes:
       - pg-data:/var/lib/postgresql/data
+    restart: always
 
 volumes:
   pg-data:
